@@ -2,6 +2,7 @@ sanitize = require('sanitizer')
 User = require("../../models/User").User
 UserCreator = require("./UserCreator")
 UserGetter = require("./UserGetter")
+Settings = require('settings-sharelatex')
 AuthenticationManager = require("../Authentication/AuthenticationManager")
 NewsLetterManager = require("../Newsletter/NewsletterManager")
 async = require("async")
@@ -25,9 +26,9 @@ module.exports = UserRegistrationHandler =
 		email = EmailHelper.parseEmail(body.email) or ''
 		password = body.password
 		if @hasZeroLengths([password, email])
-			return false
+			return "Password/email cannot be empty"
 		else
-			return true
+			return "OK"
 
 	_createNewUserIfRequired: (user, userDetails, callback)->
 		if !user?
